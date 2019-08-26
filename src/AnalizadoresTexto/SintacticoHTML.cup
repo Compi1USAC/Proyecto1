@@ -1,0 +1,123 @@
+package Analizadores;
+
+import java.util.*; 
+import java_cup.runtime.Symbol;
+
+parser code
+{:  
+    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+
+    public String resultado = "";
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado"));
+        /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado");
+            TablaErr.add(datos);
+            */
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+       /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado Error Fatal");
+                   TablaErr.add(datos);
+                  */
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado, Panic Mode"));
+    }
+
+    public void semantic(Symbol cur_token, String n) 
+    {
+        System.out.println("error semantico ");
+    }
+
+    public void semantic(String msg, Object obj) {}
+
+:}
+
+action code
+{:
+
+:}  
+
+
+terminal tHtml, tHead, tTitle, tNoufe, tDiv, tBody, tId, tIgual, tMenorQue, tMayorQue, tDiagonal;
+terminal String tCadena, tCadenaInterna;
+
+non terminal INICIO, LISTAHTML, ITEMHTML, HEAD, BODY, LISTAHEAD, ITEMHEAD;
+non terminal LISTABODY, ITEMBODY, NOUFE, DIV, LISTATRIB, ATRIB, LISTABODYEMPTY;
+
+
+start with INICIO;
+
+INICIO ::=  tMenorQue tHtml tMayorQue LISTAHTML tMenorQue tDiagonal tHtml tMayorQue {: :}
+        ;
+
+LISTAHTML ::= LISTAHTML ITEMHTML {: :}
+           | ITEMHTML {: :}
+           ;
+
+ITEMHTML ::= HEAD {: :}
+        | BODY {: :}
+        ;
+
+/**** HEAD ****/
+HEAD ::= tMenorQue tHead tMayorQue LISTAHEAD tMenorQue tDiagonal tHead tMayorQue {: :}
+        ;
+
+LISTAHEAD ::= LISTAHEAD ITEMHEAD {: :}
+           | ITEMHEAD {: :}
+           | error tMayorQue {: :}
+           ;
+
+ITEMHEAD ::= tMenorQue tTitle tMayorQue tCadenaInterna tMenorQue tDiagonal tTitle tMayorQue {: :}
+          ;
+
+
+/**** BODY ****/
+BODY ::= tMenorQue tBody tMayorQue LISTABODY tMenorQue tDiagonal tBody tMayorQue {: :}
+     ;
+
+LISTABODY ::= LISTABODY ITEMBODY {: :}
+           | ITEMBODY {: :}
+           | error tMayorQue {: :}
+           ;
+
+ITEMBODY ::= NOUFE {: :}
+          | DIV {: :}
+          ;
+
+NOUFE ::= tMenorQue tNoufe tMayorQue tCadenaInterna tMenorQue tDiagonal tNoufe tMayorQue {: :}
+       ;
+
+DIV ::= tMenorQue tDiv LISTATRIB tMayorQue LISTABODYEMPTY tDiagonal tDiv tMayorQue {: :}
+    ;
+
+LISTABODYEMPTY ::= LISTABODY tMenorQue {: :}
+                | tMenorQue {: :}
+                ;
+
+LISTATRIB ::= LISTATRIB ATRIB {: :}
+           | ATRIB {: :}
+           ;
+
+ATRIB   ::= tId tIgual tCadena {: :}
+        ;

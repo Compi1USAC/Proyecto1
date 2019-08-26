@@ -1,0 +1,119 @@
+package Analizadores;
+
+import java.util.*; 
+import java_cup.runtime.Symbol;
+import Interfaz.*;
+import InsHTML.*;
+
+parser code
+{:  
+    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+
+    public Panel resultado;
+
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado"));
+        /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado");
+            TablaErr.add(datos);
+            */
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+       /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado Error Fatal");
+                   TablaErr.add(datos);
+                  */
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado, Panic Mode"));
+    }
+
+    public void semantic(Symbol cur_token, String n) 
+    {
+        System.out.println("error semantico ");
+    }
+
+    public void semantic(String msg, Object obj) {}
+
+:}
+
+action code
+{:
+
+:}  
+
+
+terminal String tCadena, tComponent, tReturn, tVar, tIgual, tPuntoComa, tLlaveC;
+terminal String tLlaveA, tParA, tParC, tTrue, tFalse, tId, tCaracter, tEntero;
+terminal String tDoble, tComa, tSuma, tResta, tMult, tDiv, tPow, tMayorQ, tMenorQ;
+terminal String tPanel, tX, tY, tHeigth, tWidth, tColor, tBorder, tDiagonal, tIdEtq, tNumero;
+    
+non terminal String DECLARACION, SENTS, LISTASENTS, ASIGNACION, REASIGNACION;
+non terminal LISTASIGNACION, E, COMPONENTE, SENTCOMPONENTE, LSENTCOMPONENTE, RETURN, ATRIB;
+non terminal LOPCIONRETURN, OPCIONRETURN, LISTACOMPN, COMPN, LISTACOMPNOVACIO;
+non terminal Panel PANEL, INICIO;
+non terminal LinkedList<Panel> LISTAPANEL;
+
+precedence left tSuma, tResta;
+precedence left tMult, tDiv;
+precedence left tPow;
+
+
+start with INICIO;
+
+
+/*************************************
+NO USAR ESTA GRAMATICA EN EL PROYECTO, 
+FUE HECHA CON FINES DIDACTICOS
+**************************************/
+
+INICIO ::= tReturn PANEL:a tParC tPuntoComa {: parser.resultado = a; :}
+        ;
+
+/*************************************
+NO USAR ESTA GRAMATICA EN EL PROYECTO, 
+FUE HECHA CON FINES DIDACTICOS
+COMO SE PUDE NOTAR EL ORDEN ESTA QUEMADO
+**************************************/
+
+PANEL ::= tMenorQ tPanel 
+        tHeigth tIgual tNumero:h
+        tWidth tIgual tNumero:w
+        tColor tIgual tCadena:c
+        tMayorQ 
+        LISTAPANEL:l
+        tMenorQ tDiagonal 
+        tPanel tMayorQ {: RESULT = new Panel(l, Integer.parseInt(h), Integer.parseInt(w), c); :}
+|       
+        tMenorQ tPanel 
+        tHeigth tIgual tNumero:h
+        tWidth tIgual tNumero:w
+        tColor tIgual tCadena:c
+        tMayorQ  
+        tMenorQ tDiagonal 
+        tPanel tMayorQ  {: RESULT = new Panel(new LinkedList<>(), Integer.parseInt(h), Integer.parseInt(w), c); :}
+        ;
+
+LISTAPANEL ::= LISTAPANEL:a PANEL:b {: RESULT = a; RESULT.add(b); :}
+            | PANEL:a {: RESULT = new LinkedList<>(); RESULT.add(a); :}
+            ;
+
