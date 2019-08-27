@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/migue/Desktop/CodigoClases2S2019-Proyecto/src/InstrHTML/LibreriaColor.java</file>
-            <file>file:/C:/Users/migue/Desktop/CodigoClases2S2019-Proyecto/src/Interfaz/Mostrar.java</file>
-            <file>file:/C:/Users/migue/Desktop/CodigoClases2S2019-Proyecto/src/InstrHTML/Panel.java</file>
-            <file>file:/C:/Users/migue/Desktop/CodigoClases2S2019-Proyecto/src/AnalizadoresTexto/SintacticoUFE.cup</file>
+            <file>file:/C:/Users/migue/Desktop/Clase4/Proyecto1/src/AnalizadoresTexto/SintacticoUFE.cup</file>
+            <file>file:/C:/Users/migue/Desktop/Clase4/Proyecto1/src/InstrHTML/Panel.java</file>
+            <file>file:/C:/Users/migue/Desktop/Clase4/Proyecto1/src/AnalizadoresTexto/LexicoUFE.jflex</file>
         </group>
     </open-files>
 </project-private>

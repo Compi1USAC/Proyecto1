@@ -151,15 +151,15 @@ public class Mostrar extends javax.swing.JFrame {
         SintacticoUFE sintactico = new SintacticoUFE(lexico);
         try{
             sintactico.parse();
-            Panel p = sintactico.resultado;
-            jPanel1.removeAll();
-            jPanel1.setLayout(null);
-            p.ejecutar(jPanel1);
-            jPanel1.repaint();
-            
         }catch(Exception e){
             System.out.println("Exception "+e.toString());
         }
+        Panel p = sintactico.resultado;
+        jPanel1.removeAll();
+        jPanel1.setLayout(null);
+        p.ejecutar(jPanel1);
+        jPanel1.repaint();
+            
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

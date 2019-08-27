@@ -3,7 +3,7 @@ package Analizadores;
 import java.util.*; 
 import java_cup.runtime.Symbol;
 import Interfaz.*;
-import InsHTML.*;
+import InstrHTML.*;
 
 parser code
 {:  
@@ -63,9 +63,9 @@ action code
 
 
 terminal String tCadena, tComponent, tReturn, tVar, tIgual, tPuntoComa, tLlaveC;
-terminal String tLlaveA, tParA, tParC, tTrue, tFalse, tId, tCaracter, tEntero;
+terminal String tLlaveA, tParA, tParC, tTrue, tFalse, tId, tCaracter, tEntero, tClassname;
 terminal String tDoble, tComa, tSuma, tResta, tMult, tDiv, tPow, tMayorQ, tMenorQ;
-terminal String tPanel, tX, tY, tHeigth, tWidth, tColor, tBorder, tDiagonal, tIdEtq, tNumero;
+terminal String tPanel, tX, tY, tHeight, tWidth, tColor, tBorder, tDiagonal, tIdEtq, tNumero;
     
 non terminal String DECLARACION, SENTS, LISTASENTS, ASIGNACION, REASIGNACION;
 non terminal LISTASIGNACION, E, COMPONENTE, SENTCOMPONENTE, LSENTCOMPONENTE, RETURN, ATRIB;
@@ -86,7 +86,7 @@ NO USAR ESTA GRAMATICA EN EL PROYECTO,
 FUE HECHA CON FINES DIDACTICOS
 **************************************/
 
-INICIO ::= tReturn PANEL:a tParC tPuntoComa {: parser.resultado = a; :}
+INICIO ::= tReturn PANEL:a tParC tPuntoComa {: parser.resultado = a; RESULT = a; :}
         ;
 
 /*************************************
@@ -96,8 +96,8 @@ COMO SE PUDE NOTAR EL ORDEN ESTA QUEMADO
 **************************************/
 
 PANEL ::= tMenorQ tPanel 
-        tHeigth tIgual tNumero:h
-        tWidth tIgual tNumero:w
+        tHeight tIgual tEntero:h
+        tWidth tIgual tEntero:w
         tColor tIgual tCadena:c
         tMayorQ 
         LISTAPANEL:l
@@ -105,8 +105,8 @@ PANEL ::= tMenorQ tPanel
         tPanel tMayorQ {: RESULT = new Panel(l, Integer.parseInt(h), Integer.parseInt(w), c); :}
 |       
         tMenorQ tPanel 
-        tHeigth tIgual tNumero:h
-        tWidth tIgual tNumero:w
+        tHeight tIgual tEntero:h
+        tWidth tIgual tEntero:w
         tColor tIgual tCadena:c
         tMayorQ  
         tMenorQ tDiagonal 

@@ -34,6 +34,7 @@ public class Panel{
     }
     
     public void ejecutar(JPanel entorno){
+        System.out.println("Holamudno");
         /** Crear nuevo Panel***/
         JPanel nuevo = new JPanel();
         nuevo.setLayout(null);

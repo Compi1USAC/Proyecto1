@@ -5,10 +5,10 @@
 
 package Analizadores;
 
-import InstrHTML.Panel;
 import java.util.*;
 import java_cup.runtime.Symbol;
 import Interfaz.*;
+import InstrHTML.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -44,21 +44,21 @@ public class SintacticoUFE extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\036\000\004\006\004\001\002\000\004\033\007\001" +
+    "\000\036\000\004\006\004\001\002\000\004\034\007\001" +
     "\002\000\004\002\006\001\002\000\004\002\001\001\002" +
-    "\000\004\034\013\001\002\000\004\015\011\001\002\000" +
+    "\000\004\035\013\001\002\000\004\015\011\001\002\000" +
     "\004\011\012\001\002\000\004\002\000\001\002\000\004" +
-    "\037\014\001\002\000\004\010\015\001\002\000\004\045" +
-    "\016\001\002\000\004\040\017\001\002\000\004\010\020" +
-    "\001\002\000\004\045\021\001\002\000\004\041\022\001" +
+    "\040\014\001\002\000\004\010\015\001\002\000\004\022" +
+    "\016\001\002\000\004\041\017\001\002\000\004\010\020" +
+    "\001\002\000\004\022\021\001\002\000\004\042\022\001" +
     "\002\000\004\010\023\001\002\000\004\004\024\001\002" +
-    "\000\004\032\025\001\002\000\004\033\026\001\002\000" +
-    "\006\034\013\043\036\001\002\000\004\033\031\001\002" +
-    "\000\004\033\ufffc\001\002\000\006\034\013\043\033\001" +
-    "\002\000\004\033\ufffd\001\002\000\004\034\034\001\002" +
-    "\000\004\032\035\001\002\000\006\015\uffff\033\uffff\001" +
-    "\002\000\004\034\037\001\002\000\004\032\040\001\002" +
-    "\000\006\015\ufffe\033\ufffe\001\002" });
+    "\000\004\033\025\001\002\000\004\034\026\001\002\000" +
+    "\006\035\013\044\036\001\002\000\004\034\031\001\002" +
+    "\000\004\034\ufffc\001\002\000\006\035\013\044\033\001" +
+    "\002\000\004\034\ufffd\001\002\000\004\035\034\001\002" +
+    "\000\004\033\035\001\002\000\006\015\uffff\034\uffff\001" +
+    "\002\000\004\035\037\001\002\000\004\033\040\001\002" +
+    "\000\006\015\ufffe\034\ufffe\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -219,7 +219,7 @@ class CUP$SintacticoUFE$actions {
           return CUP$SintacticoUFE$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // PANEL ::= tMenorQ tPanel tHeigth tIgual tNumero tWidth tIgual tNumero tColor tIgual tCadena tMayorQ LISTAPANEL tMenorQ tDiagonal tPanel tMayorQ 
+          case 2: // PANEL ::= tMenorQ tPanel tHeight tIgual tEntero tWidth tIgual tEntero tColor tIgual tCadena tMayorQ LISTAPANEL tMenorQ tDiagonal tPanel tMayorQ 
             {
               Panel RESULT =null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$SintacticoUFE$stack.elementAt(CUP$SintacticoUFE$top-12)).left;
@@ -240,7 +240,7 @@ class CUP$SintacticoUFE$actions {
           return CUP$SintacticoUFE$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // PANEL ::= tMenorQ tPanel tHeigth tIgual tNumero tWidth tIgual tNumero tColor tIgual tCadena tMayorQ tMenorQ tDiagonal tPanel tMayorQ 
+          case 3: // PANEL ::= tMenorQ tPanel tHeight tIgual tEntero tWidth tIgual tEntero tColor tIgual tCadena tMayorQ tMenorQ tDiagonal tPanel tMayorQ 
             {
               Panel RESULT =null;
 		int hleft = ((java_cup.runtime.Symbol)CUP$SintacticoUFE$stack.elementAt(CUP$SintacticoUFE$top-11)).left;
