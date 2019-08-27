@@ -5,8 +5,8 @@
 
 #### **CLASE 1**
 
-- Pasos
-1. Ingresar la siguiente entrada
+__Pasos:__
+- Ingresar la siguiente entrada \
 ```javascript
 return ( <panel height = 305 width = 305 color = "red">
 			<panel height = 155 width = 155 color = "blue">
@@ -16,8 +16,8 @@ return ( <panel height = 305 width = 305 color = "red">
 			</panel>	
 		</panel>);
 ```
-2. Presionar el botón _Analizar UFE_
+- Presionar el botón _Analizar UFE_ \
 ![Boton](/boton.PNG)
 
-3. Salida
-![Boton](/interfaz.PNG)
+- Salida \
+![Interfaz](/interfaz.PNG)
