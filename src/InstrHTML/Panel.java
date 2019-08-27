@@ -24,12 +24,12 @@ public class Panel{
     int height, width, x, y;
     String color;
     
-    public Panel(LinkedList<Panel> listaComponentes, int height, int width, String color){
+    public Panel(LinkedList<Panel> listaComponentes, int height, int width, String color, int x, int y){
         this.listaComponentes = listaComponentes;
         this.height = height;
         this.width = width;
-        this.x = 0;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
         this.color = color;
     }
     

@@ -3,7 +3,7 @@ package Analizadores;
 import java.util.*; 
 import java_cup.runtime.Symbol;
 import Interfaz.*;
-import InsHTML.*;
+import InstrHTML.*;
 
 parser code
 {:  
@@ -63,15 +63,16 @@ action code
 
 
 terminal String tCadena, tComponent, tReturn, tVar, tIgual, tPuntoComa, tLlaveC;
-terminal String tLlaveA, tParA, tParC, tTrue, tFalse, tId, tCaracter, tEntero;
+terminal String tLlaveA, tParA, tParC, tTrue, tFalse, tId, tCaracter, tEntero, tClassname;
 terminal String tDoble, tComa, tSuma, tResta, tMult, tDiv, tPow, tMayorQ, tMenorQ;
-terminal String tPanel, tX, tY, tHeigth, tWidth, tColor, tBorder, tDiagonal, tIdEtq, tNumero;
+terminal String tPanel, tX, tY, tHeight, tWidth, tColor, tBorder, tDiagonal, tIdEtq, tNumero;
     
-non terminal String DECLARACION, SENTS, LISTASENTS, ASIGNACION, REASIGNACION;
+non terminal DECLARACION, SENTS, LISTASENTS, ASIGNACION, REASIGNACION;
 non terminal LISTASIGNACION, E, COMPONENTE, SENTCOMPONENTE, LSENTCOMPONENTE, RETURN, ATRIB;
 non terminal LOPCIONRETURN, OPCIONRETURN, LISTACOMPN, COMPN, LISTACOMPNOVACIO;
-non terminal Panel PANEL, INICIO;
-non terminal LinkedList<Panel> LISTAPANEL;
+non terminal PANEL, INICIO, SENTENCIAS, SNLINSTRUFEX, LINSTRUFEX, INSTRUFEX;
+non terminal LISTAATRIBUTOS, ATRIBUTO, SNLISTAATRIBUTOS, SIONOLINSTRUFEX;
+non terminal LISTAPANEL;
 
 precedence left tSuma, tResta;
 precedence left tMult, tDiv;
@@ -80,40 +81,96 @@ precedence left tPow;
 
 start with INICIO;
 
+INICIO ::= LISTASENTS;
 
-/*************************************
-NO USAR ESTA GRAMATICA EN EL PROYECTO, 
-FUE HECHA CON FINES DIDACTICOS
-**************************************/
-
-INICIO ::= tReturn PANEL:a tParC tPuntoComa {: parser.resultado = a; :}
-        ;
-
-/*************************************
-NO USAR ESTA GRAMATICA EN EL PROYECTO, 
-FUE HECHA CON FINES DIDACTICOS
-COMO SE PUDE NOTAR EL ORDEN ESTA QUEMADO
-**************************************/
-
-PANEL ::= tMenorQ tPanel 
-        tHeigth tIgual tNumero:h
-        tWidth tIgual tNumero:w
-        tColor tIgual tCadena:c
-        tMayorQ 
-        LISTAPANEL:l
-        tMenorQ tDiagonal 
-        tPanel tMayorQ {: RESULT = new Panel(l, Integer.parseInt(h), Integer.parseInt(w), c); :}
-|       
-        tMenorQ tPanel 
-        tHeigth tIgual tNumero:h
-        tWidth tIgual tNumero:w
-        tColor tIgual tCadena:c
-        tMayorQ  
-        tMenorQ tDiagonal 
-        tPanel tMayorQ  {: RESULT = new Panel(new LinkedList<>(), Integer.parseInt(h), Integer.parseInt(w), c); :}
-        ;
-
-LISTAPANEL ::= LISTAPANEL:a PANEL:b {: RESULT = a; RESULT.add(b); :}
-            | PANEL:a {: RESULT = new LinkedList<>(); RESULT.add(a); :}
+LISTASENTS ::= LISTASENTS SENTENCIAS
+            | SENTENCIAS
+            | error tPuntoComa
             ;
 
+SENTENCIAS ::= COMPONENTE
+            | DECLARACION
+            | REASIGNACION 
+            ;
+
+DECLARACION ::= tVar LISTASIGNACION tPuntoComa {: :}
+            ;
+
+LISTASIGNACION ::= LISTASIGNACION tComa ASIGNACION {: :}
+                | ASIGNACION {: :}
+                | 
+                ;
+
+ASIGNACION ::= tId tIgual E
+            | tId
+            ;
+
+REASIGNACION ::= tId tIgual E tPuntoComa
+              ;
+
+COMPONENTE ::= tComponent tId tLlaveA LSENTCOMPONENTE tLlaveC
+            ;
+
+LSENTCOMPONENTE ::= LSENTCOMPONENTE SENTCOMPONENTE
+                | SENTCOMPONENTE
+                ;
+
+SENTCOMPONENTE ::= DECLARACION
+                | REASIGNACION 
+                | RETURN
+                ;
+
+RETURN ::= tReturn LINSTRUFEX tParC tPuntoComa
+        ;
+
+
+SIONOLINSTRUFEX ::= LINSTRUFEX tMenorQ
+                | tMenorQ
+                ;
+
+LINSTRUFEX ::= LINSTRUFEX INSTRUFEX
+            | INSTRUFEX
+            | error tMayorQ
+            ;
+
+INSTRUFEX ::= PANEL
+            ;
+
+
+PANEL ::= tMenorQ tPanel SNLISTAATRIBUTOS tMayorQ SIONOLINSTRUFEX tDiagonal tPanel tMayorQ 
+        ;
+
+SNLISTAATRIBUTOS ::= LISTAATRIBUTOS 
+                |
+                ;
+
+LISTAATRIBUTOS ::= LISTAATRIBUTOS ATRIBUTO
+                | ATRIBUTO
+                | error tMayorQ
+                ;
+
+ATRIBUTO ::= tIdEtq tIgual E  
+        | tX tIgual E          
+        | tY tIgual E
+        | tHeight tIgual E
+        | tWidth tIgual E
+        | tColor tIgual E 
+        | tBorder tIgual E
+        | tClassname tIgual E
+        ;
+
+E   ::=  E tSuma E
+    | E tResta E
+    | E tMult E
+    | E tDiv E 
+    | E tPow E
+    | tId
+    | tCadena 
+    | tCaracter 
+    | tEntero
+    | tDoble
+    | tTrue
+    | tFalse
+    | tParA E tParC
+    | tLlaveA E tLlaveC  
+    ;

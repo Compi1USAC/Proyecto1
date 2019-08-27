@@ -7,19 +7,16 @@ package Interfaz;
 
 import Analizadores.*;
 import InstrHTML.Panel;
-import java.awt.Frame;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.StringReader;
-import javax.swing.JButton;
-
+import java.awt.GraphicsConfiguration;
+import javax.swing.JFrame;
 /**
  *
  * @author miguel
  */
 public class Mostrar extends javax.swing.JFrame {
+    static GraphicsConfiguration gc;
     /**
      * Creates new form Mostrar
      */
@@ -143,19 +140,25 @@ public class Mostrar extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
 
-            
+        /*JFrame frame= new JFrame(gc);	
+        frame.setTitle("Prueba JFRAME");
+        frame.setSize(400, 400);
+        frame.setVisible(true);
+        */
+        
         String datos = entrada.getText();
         LexicoUFE lexico = new LexicoUFE(new BufferedReader(new StringReader(datos)));
         SintacticoUFE sintactico = new SintacticoUFE(lexico);
         try{
             sintactico.parse();
-            Panel p = sintactico.resultado;
+            salida.setText("Analisis correcto!");
+            /*Panel p = sintactico.resultado;
             jPanel1.removeAll();
             jPanel1.setLayout(null);
             p.ejecutar(jPanel1);
             jPanel1.repaint();
+            */
             
         }catch(Exception e){
             System.out.println("Exception "+e.toString());

@@ -3,6 +3,27 @@
 
 ### _PROYECTO DE LABORATORIO #1_
 
-#### **CLASE 1**
+#### **CLASE 2**
+
+#### Entradas
+```
+var identificador, id = 3;
+
+var prueba = 4 * 4;
+
+component prueba{
+
+	var adentro = 67;
+
+	return(	<Panel height = 150 width = 200 color = "red">
+				<Panel height = 60 width = 190 color = "blue">
+					<Panel height = 20 width = 40 color = "yellow">
+
+					</Panel>
+				</Panel>
+			</Panel>
+		  );
+}
+```
 
 
